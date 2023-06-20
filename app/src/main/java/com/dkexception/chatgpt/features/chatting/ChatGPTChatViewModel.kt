@@ -2,6 +2,7 @@ package com.dkexception.chatgpt.features.chatting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import android.util.Log
 import com.dkexception.chatgpt.data.models.ChatModel
 import com.dkexception.chatgpt.data.models.ChatUserType
 import com.dkexception.chatgpt.data.remote.dto.chat_completion.ChatCompletionRequestDTO
@@ -38,7 +39,7 @@ class ChatGPTChatViewModel @Inject constructor(
                     chatList = state.chatList.apply {
                         add(
                             ChatModel(
-                                textOrUrl = prompt,
+                                textOrUrl = "как по китайски будет слово " + prompt,
                                 userType = ChatUserType.HUMAN
                             )
                         )
@@ -48,11 +49,18 @@ class ChatGPTChatViewModel @Inject constructor(
                 )
             }
 
+
             val (response, error) = openAIAPIsRepository.getTextCompletionForPrompt(
+
                 requestDTO = ChatCompletionRequestDTO(
                     messages = _state.value.toMessageListForAPI()
                 )
             )
+            Log.e("response", "response is ${response!!.choices!!.first()}")
+            Log.e("response", "_state.value is ${
+                _state.value.chatList.last().textOrUrl 
+            } ")
+
 
             val completionResponse: String =
                 error ?: response?.choices?.firstOrNull()?.message?.content.orEmpty().trim()

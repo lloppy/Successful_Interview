@@ -2,6 +2,8 @@
 
 package com.dkexception.chatgpt.ui.common
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,12 +32,8 @@ fun ChatGPTScaffold(
 ) = Scaffold(
     modifier = Modifier.fillMaxSize(),
     topBar = {
-        CenterAlignedTopAppBar(
-            title = { Text(titleText) },
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-            )
-        )
+        createDropDown()
+
     },
     bottomBar = {
         ChatTextFieldBottomBar(
@@ -53,6 +51,25 @@ fun ChatGPTScaffold(
         color = MaterialTheme.colorScheme.inversePrimary
     ) {
         content?.invoke()
+    }
+}
+
+@Composable
+private fun createDropDown() {
+    // Context Drop Down Menu
+    DropdownMenu(
+        expanded = false,
+        onDismissRequest = { /* Empty */ }
+    ) {
+        androidx.compose.material.DropdownMenuItem(onClick = { /* Translate */ }) {
+            androidx.compose.material.Text(text = "Translate")
+        }
+        androidx.compose.material.DropdownMenuItem(onClick = { /* Answer */ }) {
+            androidx.compose.material.Text(text = "Answer")
+        }
+        androidx.compose.material.DropdownMenuItem(onClick = { /* Question */ }) {
+            androidx.compose.material.Text(text = "Question")
+        }
     }
 }
 

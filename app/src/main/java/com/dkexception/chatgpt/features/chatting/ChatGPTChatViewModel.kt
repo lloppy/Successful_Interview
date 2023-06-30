@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import android.util.Log
 import com.dkexception.chatgpt.data.models.ChatModel
 import com.dkexception.chatgpt.data.models.ChatUserType
+import com.dkexception.chatgpt.data.models.Response
 import com.dkexception.chatgpt.data.remote.dto.chat_completion.ChatCompletionRequestDTO
 import com.dkexception.chatgpt.data.repository.OpenAIAPIsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class ChatGPTChatViewModel @Inject constructor(
     private val openAIAPIsRepository: OpenAIAPIsRepository
 ) : ViewModel() {
+    var base : String =  Response().query
 
     private val _state = MutableStateFlow(ChatGPTChatScreenState())
     val state = _state.asStateFlow()
@@ -39,7 +41,7 @@ class ChatGPTChatViewModel @Inject constructor(
                     chatList = state.chatList.apply {
                         add(
                             ChatModel(
-                                textOrUrl = "как по китайски будет слово " + prompt,
+                                textOrUrl = base + prompt,
                                 userType = ChatUserType.HUMAN
                             )
                         )

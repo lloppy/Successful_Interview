@@ -36,3 +36,9 @@ enum class ChatUserType {
 
     HUMAN
 }
+
+class Response {
+    var query: String =
+        "\"переведи предложение на русский и напиши на него ответ по китайский с переводом на русский и пиньинь: \""
+
+}
